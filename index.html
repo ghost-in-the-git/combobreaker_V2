@@ -367,25 +367,25 @@
         </div>
 
         <div class="equipment-panel">
-            <h4>[ EQUIPMENT ]</h4>
+            <h4>[ INSTALLATIONS ]</h4>
             <div class="equip-slot">
-                <label>Body</label>
+                <label>F R A M E</label>
                 <select id="equip-body"><option value="">-- None --</option></select>
             </div>
             <div class="equip-slot">
-                <label>Legs</label>
+                <label>L E G S</label>
                 <select id="equip-legs"><option value="">-- None --</option></select>
             </div>
             <div class="equip-slot">
-                <label>Arms</label>
+                <label>A R M S</label>
                 <select id="equip-arms"><option value="">-- None --</option></select>
             </div>
             <div class="equip-slot">
-                <label>Weapon</label>
+                <label>W E A P O N</label>
                 <select id="equip-weapon"><option value="">-- None --</option></select>
             </div>
             <div class="equip-slot">
-                <label>Systems Chip</label>
+                <label>P R O C E S S O R</label>
                 <select id="equip-chip"><option value="">-- None --</option></select>
             </div>
         </div>
@@ -865,14 +865,14 @@
             if (victory) {
                 addMessage(`[ All hostiles confirmed destroyed ]`, 'system');
                 game.player.xp += xpEarned;
-                addMessage(`Mech gained ${xpEarned} XP.`, 'system');
+                addMessage(`Mech gained: ${xpEarned} XP.`, 'system');
 
                 // Drop random item
                 if (enemyType) {
                     const droppedItem = getRandomItemDrop(enemyType);
                     if (droppedItem) {
                         addItemToInventory(droppedItem);
-                        addMessage(`Mech found item: ${droppedItem.name} [${ITEM_TYPES[droppedItem.type]}]`, 'victory');
+                        addMessage(`Mech found: ${droppedItem.name} [${ITEM_TYPES}]`, 'victory');
                     }
                 }
 
