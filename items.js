@@ -14,46 +14,74 @@
 const ITEMS = [
     // ==================== BODY (HP & Defence) ====================
     {
-        name: "Steel Plate [+10 HP]",
+        name: "Low-Grade Chassis [+10 HP][+1 DEF]",
         type: "body",
         stats: { hp: 10, defence: 1 },
-        dropRate: 50,
+        dropRate: 10,
         droppedBy: []
     },
     {
-        name: "Reinforced Chassis",
+        name: "Standard Chassis [+20 HP][+2 DEF]",
         type: "body",
         stats: { hp: 20, defence: 2 },
-        dropRate: 35,
+        dropRate: 10,
         droppedBy: []
     },
     {
-        name: "Titanium Frame",
+        name: "Advanced Chassis [+30 HP][+3 DEF]",
         type: "body",
         stats: { hp: 30, defence: 3 },
-        dropRate: 25,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel", "Droid Destroyer"]
+        dropRate: 10,
+        droppedBy: []
     },
     {
-        name: "Composite Armor",
+        name: "Military Chassis [+40 HP][+4 DEF]",
         type: "body",
         stats: { hp: 40, defence: 4 },
-        dropRate: 15,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
+        dropRate: 10,
+        droppedBy: []
     },
     {
-        name: "Nano-Weave Shell",
+        name: "Old Breaker Chassis [+50 HP][+5 DEF]",
         type: "body",
         stats: { hp: 50, defence: 5 },
         dropRate: 10,
-        droppedBy: ["Droid Destroyer"]
+        droppedBy: []
     },
     {
-        name: "Fortress Core",
+        name: "Breaker Chassis [+60 HP][+6 DEF]",
         type: "body",
-        stats: { hp: 75, defence: 7 },
-        dropRate: 5,
-        droppedBy: ["Droid Destroyer"]
+        stats: { hp: 60, defence: 6 },
+        dropRate: 10,
+        droppedBy: []
+    },
+        {
+        name: "EVO1 Breaker Chassis [+70 HP][+7 DEF]",
+        type: "body",
+        stats: { hp: 70, defence: 7 },
+        dropRate: 10,
+        droppedBy: []
+    },
+            {
+        name: "EVO2 Breaker Chassis [+80 HP][+8 DEF]",
+        type: "body",
+        stats: { hp: 80, defence: 8 },
+        dropRate: 10,
+        droppedBy: []
+    },
+                {
+        name: "EVO3 Breaker Chassis [+90 HP][+9 DEF]",
+        type: "body",
+        stats: { hp: 10, defence: 1 },
+        dropRate: 10,
+        droppedBy: []
+    },
+                {
+        name: "EVO4 Breaker Chassis [+100 HP][+10 DEF]",
+        type: "body",
+        stats: { hp: 10, defence: 1 },
+        dropRate: 10,
+        droppedBy: []
     },
 
     // ==================== LEGS (Speed) ====================
