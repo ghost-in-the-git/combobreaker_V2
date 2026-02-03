@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C O M B O B R E A K E R</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0f;
+            color: #00ff88;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            width: 250px;
+            background: #12121a;
+            border-right: 2px solid #00ff88;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Offset chat panel for fixed stats */
+        .chat-panel {
+            margin-left: 250px;
+        }
+
+        .stats-panel h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff8855;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #00ff8833;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        .stat-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .hp-bar-container {
+            margin-top: 20px;
+            background: #1a1a2e;
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .hp-bar {
+            height: 24px;
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hp-text {
+            color: #0a0a0f;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .xp-bar-container {
+            margin-top: 10px;
+            background: #1a1a2e;
+            border: 1px solid #4488ff;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xp-bar {
+            height: 16px;
+            background: linear-gradient(90deg, #4488ff, #2266cc);
+            transition: width 0.3s ease;
+        }
+
+        .xp-label {
+            text-align: center;
+            font-size: 11px;
+            color: #4488ff;
+            margin-top: 4px;
+        }
+
+        /* Chat Panel */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #0d0d14;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 100px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 8px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.system {
+            background: none;
+            border: none;
+            color: #00ff88;
+            align-self: center;
+            max-width: 90%;
+        }
+
+        .message.systemblue {
+            background: none;
+            border: none;
+            color: #0000ff;
+            align-self: center;
+            max-width: 90%;
+        }
+
+        .message.enemy {
+            background: #2a1a1a;
+            border-left: 3px solid #ff4444;
+            color: #ff6666;
+        }
+
+        .message.player {
+            background: #1a2a1a;
+            border-left: 3px solid #00ff88;
+            color: #00ff88;
+            align-self: flex-end;
+        }
+
+        .message.battle {
+            background: #1a1a2e;
+            border-left: 3px solid #4488ff;
+            color: #88aaff;
+            font-style: italic;
+        }
+
+        .message.damage {
+            background: #2a1a2a;
+            border-left: 3px solid #ff44aa;
+            color: #ff88cc;
+        }
+
+        .message.victory {
+            background: #1a2a2a;
+            border-left: 3px solid #00ffcc;
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+        .message.defeat {
+            background: #2a1a1a;
+            border-left: 3px solid #ff0000;
+            color: #ff4444;
+            font-weight: bold;
+        }
+
+        .message.levelup {
+            background: #2a2a1a;
+            border-left: 3px solid #ffdd00;
+            color: #ffdd00;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Equipment Panel */
+        .equipment-panel {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #00ff8844;
+        }
+
+        .equipment-panel h4 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .equip-slot {
+            margin-bottom: 8px;
+        }
+
+        .equip-slot label {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 2px;
+        }
+
+        .equip-slot select {
+            width: 100%;
+            padding: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            background: #1a1a2e;
+            color: #00ff88;
+            border: 1px solid #00ff8855;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .equip-slot select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .equip-slot select:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        /* Action Panel */
+        .action-panel {
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            border: 2px solid;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .action-btn.engage {
+            background: #1a2a1a;
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .action-btn.engage:hover:not(:disabled) {
+            background: #00ff88;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #00ff8855;
+        }
+
+        .action-btn.retreat {
+            background: #2a1a1a;
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .action-btn.retreat:hover:not(:disabled) {
+            background: #ff4444;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #ff444455;
+        }
+
+        .timer-display {
+            text-align: center;
+            padding: 10px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* Scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #12121a;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #00ff8855;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="stats-panel">
+        <h3>[ COMBOBREAKER ]</h3>
+        <h4>v1.1.0</h4>
+
+        <div class="hp-bar-container">
+            <div class="hp-bar" id="hp-bar">
+                <span class="hp-text" id="hp-text">100 / 100</span>
+            </div>
+        </div>
+
+        <div class="xp-bar-container">
+            <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
+        </div>
+        <div class="xp-label" id="xp-label">XP: 0 / 10</div>
+
+        <div style="margin-top: 20px;">
+            <div class="stat-row">
+                <span class="stat-label">Level</span>
+                <span class="stat-value" id="stat-level">1</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Attack</span>
+                <span class="stat-value" id="stat-attack">5</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Speed</span>
+                <span class="stat-value" id="stat-speed">10</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Defence</span>
+                <span class="stat-value" id="stat-defence">3</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Combo</span>
+                <span class="stat-value" id="stat-combo">5%</span>
+            </div>
+        </div>
+
+        <div class="timer-display" id="timer-display">
+            Next wave in: --:--
+        </div>
+
+        <div class="equipment-panel">
+            <h4>[ EQUIPMENT ]</h4>
+            <div class="equip-slot">
+                <label>Body</label>
+                <select id="equip-body"><option value="">-- None --</option></select>
+            </div>
+            <div class="equip-slot">
+                <label>Legs</label>
+                <select id="equip-legs"><option value="">-- None --</option></select>
+            </div>
+            <div class="equip-slot">
+                <label>Arms</label>
+                <select id="equip-arms"><option value="">-- None --</option></select>
+            </div>
+            <div class="equip-slot">
+                <label>Weapon</label>
+                <select id="equip-weapon"><option value="">-- None --</option></select>
+            </div>
+            <div class="equip-slot">
+                <label>Systems Chip</label>
+                <select id="equip-chip"><option value="">-- None --</option></select>
+            </div>
+        </div>
+
+        <div class="action-panel">
+            <button class="action-btn engage" id="btn-engage" disabled>Engage</button>
+            <button class="action-btn retreat" id="btn-retreat" disabled>Decline</button>
+        </div>
+    </div>
+
+    <div class="chat-panel">
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages appear here -->
+            <div class="action-panel">   <!-- Edit by me -->
+        </div>
+    </div>
+
+    <script src="enemies.js"></script>
+    <script src="items.js"></script>
+    <script>
+        // Game State
+        const game = {
+            player: {
+                // Base stats (without equipment)
+                baseMaxHp: 100,
+                baseAttack: 5,
+                baseSpeed: 10,
+                baseDefence: 3,
+                baseCombo: 5,
+                // Current stats (with equipment)
+                level: 1,
+                xp: 0,
+                xpToLevel: 10,
+                maxHp: 100,
+                hp: 100,
+                attack: 5,
+                speed: 10,
+                defence: 3,
+                combo: 5
+            },
+            // Inventory: array of item objects
+            inventory: [],
+            // Equipped items by slot (stores item name or null)
+            equipment: {
+                body: null,
+                legs: null,
+                arms: null,
+                weapon: null,
+                chip: null
+            },
+            currentWave: null,
+            inBattle: false,
+            battleInterval: null,
+            regenInterval: null,
+            waveTimer: null,
+            nextWaveTime: 0,
+            waveExpireTimer: null,
+            WAVE_INTERVAL: 60000, // 1 minute
+            WAVE_EXPIRE: 30000, // 30 seconds to engage
+            countdownInterval: null,
+            countdownMsg: null,
+            REGEN_RATE: 10000 // 1 hp per 10 seconds
+        };
+
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const btnEngage = document.getElementById('btn-engage');
+        const btnRetreat = document.getElementById('btn-retreat');
+        const timerDisplay = document.getElementById('timer-display');
+
+        // Add message to chat with delay
+        async function addMessage(text, type = 'system') {
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            chatMessages.appendChild(msg);
+            msg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            await new Promise(resolve => setTimeout(resolve, 800));
+        }
+
+        // Update UI
+        function updateStats() {
+            const p = game.player;
+
+            // HP Bar
+            const hpPercent = (p.hp / p.maxHp) * 100;
+            document.getElementById('hp-bar').style.width = `${hpPercent}%`;
+            document.getElementById('hp-text').textContent = `${p.hp} / ${p.maxHp}`;
+
+            // XP Bar
+            const xpPercent = (p.xp / p.xpToLevel) * 100;
+            document.getElementById('xp-bar').style.width = `${xpPercent}%`;
+            document.getElementById('xp-label').textContent = `XP: ${p.xp} / ${p.xpToLevel}`;
+
+            // Stats
+            document.getElementById('stat-level').textContent = p.level;
+            document.getElementById('stat-attack').textContent = p.attack;
+            document.getElementById('stat-speed').textContent = p.speed;
+            document.getElementById('stat-defence').textContent = p.defence;
+            document.getElementById('stat-combo').textContent = `${p.combo}%`;
+        }
+
+        // Recalculate stats from base + equipment
+        function recalculateStats() {
+            const p = game.player;
+            const oldMaxHp = p.maxHp;
+
+            // Start with base stats
+            p.maxHp = p.baseMaxHp;
+            p.attack = p.baseAttack;
+            p.speed = p.baseSpeed;
+            p.defence = p.baseDefence;
+            p.combo = p.baseCombo;
+
+            // Add equipment bonuses
+            for (const slot in game.equipment) {
+                const itemName = game.equipment[slot];
+                if (itemName) {
+                    const item = ITEMS.find(i => i.name === itemName);
+                    if (item && item.stats) {
+                        if (item.stats.hp) p.maxHp += item.stats.hp;
+                        if (item.stats.attack) p.attack += item.stats.attack;
+                        if (item.stats.speed) p.speed += item.stats.speed;
+                        if (item.stats.defence) p.defence += item.stats.defence;
+                        if (item.stats.combo) p.combo += item.stats.combo;
+                    }
+                }
+            }
+
+            // Adjust current HP if max HP changed
+            if (p.maxHp > oldMaxHp) {
+                p.hp += (p.maxHp - oldMaxHp);
+            } else if (p.hp > p.maxHp) {
+                p.hp = p.maxHp;
+            }
+
+            updateStats();
+        }
+
+        // Update equipment dropdowns with inventory items
+        function updateEquipmentUI() {
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+
+            slots.forEach(slot => {
+                const select = document.getElementById(`equip-${slot}`);
+                const currentValue = game.equipment[slot] || '';
+
+                // Clear and rebuild options
+                select.innerHTML = '<option value="">-- None --</option>';
+
+                // Add items from inventory that match this slot
+                const slotItems = game.inventory.filter(item => item.type === slot);
+                slotItems.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.name;
+                    option.textContent = item.name;
+                    if (item.name === currentValue) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        // Handle equipment change
+        function onEquipmentChange(slot, itemName) {
+            if (game.inBattle) return; // Can't change during battle
+
+            game.equipment[slot] = itemName || null;
+            recalculateStats();
+        }
+
+        // Lock/unlock equipment dropdowns
+        function setEquipmentLocked(locked) {
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            slots.forEach(slot => {
+                document.getElementById(`equip-${slot}`).disabled = locked;
+            });
+        }
+
+        // Add item to inventory
+        function addItemToInventory(item) {
+            game.inventory.push(item);
+            updateEquipmentUI();
+        }
+
+        // Get random item drop from defeated enemy
+        function getRandomItemDrop(enemyName) {
+            // Filter items that can drop from this enemy
+            const droppableItems = ITEMS.filter(item => {
+                if (item.droppedBy.length === 0) return true; // Drops from any enemy
+                return item.droppedBy.includes(enemyName);
+            });
+
+            if (droppableItems.length === 0) return null;
+
+            // Calculate total drop rate
+            const totalRate = droppableItems.reduce((sum, item) => sum + item.dropRate, 0);
+
+            // Random selection
+            let roll = Math.random() * totalRate;
+            for (const item of droppableItems) {
+                roll -= item.dropRate;
+                if (roll <= 0) {
+                    return item;
+                }
+            }
+
+            return droppableItems[0];
+        }
+
+        // Level up check
+        function checkLevelUp() {
+            const p = game.player;
+            if (p.xp >= p.xpToLevel) {
+                p.xp -= p.xpToLevel;
+                p.level++;
+                p.xpToLevel = Math.floor(p.xpToLevel * 1.5);
+
+                // Increase BASE stats
+                p.baseMaxHp += 10;
+                p.baseAttack += 2;
+                p.baseSpeed += 3;
+                p.baseDefence += 1;
+                p.baseCombo = Math.min(p.baseCombo + 2, 50);
+
+                // Recalculate with equipment and full heal
+                recalculateStats();
+                p.hp = p.maxHp;
+
+                addMessage(`[LEVEL INCREASED TO ${p.level}]`, 'system');
+                addMessage(`Stats gained: [ATK+2] [SPD+3] [DEF+1] [COMBO+2%] [MAX HP+10]`, 'system');
+                updateStats();
+
+                // Check for another level up
+                checkLevelUp();
+            }
+        }
+
+        // Select enemy type based on player level and appearance rates
+        function selectEnemyType() {
+            const playerLevel = game.player.level;
+
+            // Filter enemies by level requirement
+            const available = ENEMIES.filter(e => e.minLevel <= playerLevel);
+
+            // Calculate total appearance rate
+            const totalRate = available.reduce((sum, e) => sum + e.appearanceRate, 0);
+
+            // Random selection weighted by appearance rate
+            let roll = Math.random() * totalRate;
+            for (const enemy of available) {
+                roll -= enemy.appearanceRate;
+                if (roll <= 0) {
+                    return enemy;
+                }
+            }
+
+            // Fallback to first available
+            return available[0];
+        }
+
+        // Generate enemy wave
+        function generateWave() {
+            const enemyType = selectEnemyType();
+            const baseEnemies = 3 + game.player.level;
+            const variance = Math.floor(Math.random() * 3) - 1;
+            const enemyCount = Math.max(2, baseEnemies + variance);
+
+            return {
+                enemyType: enemyType,
+                count: enemyCount,
+                remaining: enemyCount,
+                currentTarget: 1, // Which enemy we're fighting (1-indexed)
+                currentEnemy: null, // Will hold current enemy's HP in battle
+                turn: 0
+            };
+        }
+
+        // Clear countdown timer
+        function clearCountdown() {
+            if (game.countdownInterval) {
+                clearInterval(game.countdownInterval);
+                game.countdownInterval = null;
+            }
+            if (game.countdownMsg) {
+                game.countdownMsg.remove();
+                game.countdownMsg = null;
+            }
+        }
+
+        // Spawn new wave
+        function spawnWave() {
+            if (game.inBattle || game.currentWave) return;
+
+            game.currentWave = generateWave();
+            const et = game.currentWave.enemyType;
+            addMessage(`A squadron of ${game.currentWave.count} ${et.name}s are within engagement range [ATK:${et.attack} DEF:${et.defence} HP:${et.hp}]`, 'enemy');
+
+            // Create countdown message
+            let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
+            const countdownMsg = document.createElement('div');
+            countdownMsg.className = 'message system';
+            countdownMsg.textContent = `Enemy location locked [${secondsLeft}] seconds until EMP signal jam.`;
+            chatMessages.appendChild(countdownMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            game.countdownMsg = countdownMsg;
+
+            addMessage(`Mech awaiting orders...`, 'player');
+
+            // Update countdown every second
+            game.countdownInterval = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    countdownMsg.textContent = `Enemy signal locked. [${secondsLeft}] seconds until signal loss.`;
+                } else {
+                    clearCountdown();
+                }
+            }, 1000);
+
+            btnEngage.disabled = false;
+            btnRetreat.disabled = false;
+
+            // Set expiration timer
+            if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
+            game.waveExpireTimer = setTimeout(() => {
+                clearCountdown();
+                if (game.currentWave && !game.inBattle) {
+                    addMessage(`Signal lost. Scanning...`, 'system');
+                    game.currentWave = null;
+                    btnEngage.disabled = true;
+                    btnRetreat.disabled = true;
+                }
+            }, game.WAVE_EXPIRE);
+        }
+
+        // Start wave timer
+        function startWaveTimer() {
+            game.nextWaveTime = Date.now() + game.WAVE_INTERVAL;
+
+            if (game.waveTimer) clearInterval(game.waveTimer);
+
+            game.waveTimer = setInterval(() => {
+                const remaining = Math.max(0, game.nextWaveTime - Date.now());
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                timerDisplay.textContent = `Next wave in: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (remaining <= 0) {
+                    spawnWave();
+                    startWaveTimer();
+                }
+            }, 1000);
+        }
+
+        // Player attack helper - calculates damage vs enemy defence
+        function calculateDamage(attackStat, defenceStat) {
+            const damage = Math.max(1, attackStat - defenceStat);
+            return damage;
+        }
+
+        // Battle round - player attacks, then all enemies attack in sequence
+        async function battleRound() {
+            const p = game.player;
+            const wave = game.currentWave;
+            const et = wave.enemyType;
+
+            if (!wave || wave.remaining <= 0 || p.hp <= 0) {
+                endBattle();
+                return;
+            }
+
+            // Spawn new enemy if needed
+            if (wave.currentEnemy === null) {
+                wave.currentEnemy = et.hp;
+            }
+
+            wave.turn++;
+            await addMessage(`- - - - - - - - - - - - - - - - - - - - -[ Turn ${wave.turn} ]- - - - - - - - - - - - - - - - - - - - - `, 'system');
+
+            // Determine attacks this turn
+            let speedTriggered = Math.random() * 100 < p.speed;
+            let comboTriggered = Math.random() * 100 < p.combo;
+            let attackCount = speedTriggered ? 2 : 1;
+
+            if (speedTriggered) {
+                await addMessage(`[SPEEDBREAKER TRIGGERED]`, 'player');
+            }
+            if (comboTriggered) {
+                await addMessage(`[COMBOBREAKER TRIGGERED]`, 'player');
+            }
+
+            // Calculate damage (combo applies to all attacks this turn)
+            let playerDamage = calculateDamage(p.attack, et.defence);
+            if (comboTriggered) {
+                playerDamage *= 2;
+            }
+
+            // Perform attacks
+            for (let atk = 1; atk <= attackCount; atk++) {
+                // If current enemy is dead, target next one
+                if (wave.currentEnemy === null) {
+                    if (wave.remaining <= 0) {
+                        endBattle(true);
+                        return;
+                    }
+                    wave.currentEnemy = et.hp;
+                }
+
+                wave.currentEnemy -= playerDamage;
+                await addMessage(`Mech attacks ${et.name} #${wave.currentTarget} for ${playerDamage} damage.`, 'player');
+
+                // Check if current enemy 
+                if (wave.currentEnemy <= 0) {
+                    wave.remaining--;
+                    wave.xpEarned = (wave.xpEarned || 0) + et.xp;
+                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${et.xp} XP)`, 'enemy');
+                    wave.currentTarget++;
+                    wave.currentEnemy = null;
+
+                    if (wave.remaining <= 0) {
+                        endBattle(true);
+                        return;
+                    }
+                } else {
+                    await addMessage(`${et.name} #${wave.currentTarget} reduced to ${wave.currentEnemy} HP`, 'enemy');
+                }
+            }
+
+            // All remaining enemies attack in sequence
+            let remainingDefence = p.defence; // Defence pool for this turn
+
+            for (let i = wave.currentTarget; i <= wave.count; i++) {
+                await addMessage(`${et.name} #${i} attacks Mech for ${et.attack} damage.`, 'enemy');
+
+                if (remainingDefence >= et.attack) {
+                    // Fully blocked
+                    remainingDefence -= et.attack;
+                    await addMessage(` [Damage blocked] (${remainingDefence} defence remaining)`, 'player');
+                } else if (remainingDefence > 0) {
+                    // Partially blocked
+                    const damageTaken = et.attack - remainingDefence;
+                    await addMessage(`Remaining defence absorbs ${remainingDefence} damage, but ${damageTaken} damage is still taken.`, 'player');
+                    remainingDefence = 0;
+                    p.hp = Math.max(0, p.hp - damageTaken);
+                    updateStats();
+                } else {
+                    // No defence left
+                    p.hp = Math.max(0, p.hp - et.attack);
+                    await addMessage(`Mech takes ${et.attack} damage.`, 'player');
+                    updateStats();
+                }
+
+                // Check if player defeated
+                if (p.hp <= 0) {
+                    endBattle(false);
+                    return;
+                }
+            }
+        }
+
+        // End battle
+        function endBattle(victory = false) {
+            game.inBattle = false;
+            setEquipmentLocked(false); // Unlock equipment
+
+            if (game.battleInterval) {
+                clearInterval(game.battleInterval);
+                game.battleInterval = null;
+            }
+
+            const wave = game.currentWave;
+            const enemiesKilled = wave ? wave.count - wave.remaining : 0;
+            const xpEarned = wave ? (wave.xpEarned || 0) : 0;
+            const enemyType = wave ? wave.enemyType.name : null;
+
+            if (victory) {
+                addMessage(`[ All hostiles confirmed destroyed ]`, 'system');
+                game.player.xp += xpEarned;
+                addMessage(`Mech gained ${xpEarned} XP.`, 'system');
+
+                // Drop random item
+                if (enemyType) {
+                    const droppedItem = getRandomItemDrop(enemyType);
+                    if (droppedItem) {
+                        addItemToInventory(droppedItem);
+                        addMessage(`Mech found item: ${droppedItem.name} [${ITEM_TYPES[droppedItem.type]}]`, 'victory');
+                    }
+                }
+
+                checkLevelUp();
+            } else {
+                addMessage(`Your mech has been confirmed destroyed.`, 'system');
+                addMessage(`Systems resetting.`, 'system');
+                // Respawn with half HP
+                game.player.hp = Math.floor(game.player.maxHp / 2);
+            }
+
+            game.currentWave = null;
+            updateStats();
+            startRegen();
+            startWaveTimer();
+        }
+
+        // Start HP regeneration
+        function startRegen() {
+            if (game.regenInterval) clearInterval(game.regenInterval);
+
+            game.regenInterval = setInterval(() => {
+                if (game.inBattle) return;
+
+                if (game.player.hp < game.player.maxHp) {
+                    game.player.hp = Math.min(game.player.maxHp, game.player.hp + 1);
+                    updateStats();
+                } else {
+                    clearInterval(game.regenInterval);
+                    game.regenInterval = null;
+                }
+            }, game.REGEN_RATE);
+        }
+
+        // Utility delay
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Engage battle
+        async function engageBattle() {
+            if (!game.currentWave || game.inBattle) return;
+
+            // Clear expire timer and countdown
+            if (game.waveExpireTimer) {
+                clearTimeout(game.waveExpireTimer);
+                game.waveExpireTimer = null;
+            }
+            clearCountdown();
+
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+            game.inBattle = true;
+            setEquipmentLocked(true); // Lock equipment during battle
+
+            if (game.regenInterval) {
+                clearInterval(game.regenInterval);
+                game.regenInterval = null;
+            }
+
+            const et = game.currentWave.enemyType;
+            await addMessage(`Engagement confirmed for ${game.currentWave.count} ${et.name}s!`, 'player');
+            await addMessage(`> > >  C O M B A T  S T A R T  < < <`, 'system');
+
+            // Battle loop
+            async function runBattle() {
+                while (game.inBattle && game.currentWave && game.currentWave.remaining > 0 && game.player.hp > 0) {
+                    await battleRound();
+                }
+            }
+
+            runBattle();
+        }
+
+        // Decline battle
+        function declineBattle() {
+            if (!game.currentWave || game.inBattle) return;
+
+            // Clear expire timer and countdown
+            if (game.waveExpireTimer) {
+                clearTimeout(game.waveExpireTimer);
+                game.waveExpireTimer = null;
+            }
+            clearCountdown();
+
+            addMessage(`Engagement denied. Live to fight another day.`, 'player');
+            game.currentWave = null;
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+        }
+
+        // Event listeners
+        btnEngage.addEventListener('click', engageBattle);
+        btnRetreat.addEventListener('click', declineBattle);
+
+        // Initialize game
+        function init() {
+            // Set up equipment dropdown event listeners
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            slots.forEach(slot => {
+                document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
+                    onEquipmentChange(slot, e.target.value);
+                });
+            });
+            updateEquipmentUI();
+
+            addMessage(`============================================`, 'system');
+            addMessage(`=== C O M B O B R E A K E R  O N L I N E ===`, 'system');
+            addMessage(`============================================`, 'system');
+            addMessage(`Remote mech is ready for combat [Pilot 72632]`, 'system');
+            addMessage(``, 'system');
+            addMessage(`[] Engagement Protocols Approved [Autopilot Deactivated] `, 'system');
+            addMessage(`[K E Y //::X2Y***_***_***_***_***_LZ7`, 'system');
+            addMessage(`BreakerPilot Command Key Accepted.`, 'system');
+            addMessage(`Engagement commands now available. [Engage] or [Decline]`, 'system');
+            updateStats();
+
+            // Spawn first wave immediately for testing
+            setTimeout(() => {
+                spawnWave();
+                startWaveTimer();
+            }, 2000);
+        }
+
+        init();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
