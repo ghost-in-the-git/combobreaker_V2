@@ -319,9 +319,9 @@ const ITEMS = [
 
 // Item type labels for UI
 const ITEM_TYPES = {
-    body: "B O D Y",
-    legs: "L E G S",
-    arms: "A R M S",
-    weapon: "W E A P O N",
-    chip: "C O R E"
+    body: "body",
+    legs: "legs",
+    arms: "arms",
+    weapon: "weapon",
+    chip: "chip"
 };
