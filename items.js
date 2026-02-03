@@ -86,236 +86,292 @@ const ITEMS = [
 
     // ==================== LEGS (Speed) ====================
     {
-        name: "Standard Servos",
+        name: "Standard Servos [+2 SPD]",
         type: "legs",
-        stats: { speed: 3 },
+        stats: { speed: 2 },
+        dropRate: 60,
+        droppedBy: []
+    },
+    {
+        name: "Enhanced Servos [+4 SPD]",
+        type: "legs",
+        stats: { speed: 4 },
         dropRate: 50,
         droppedBy: []
     },
     {
-        name: "Quick Striders",
+        name: "Quick Striders [+6 SPD]",
         type: "legs",
-        stats: { speed: 5 },
-        dropRate: 35,
-        droppedBy: []
-    },
-    {
-        name: "Hydraulic Boosters",
-        type: "legs",
-        stats: { speed: 8 },
-        dropRate: 25,
-        droppedBy: ["Droid Scout", "Droid Enforcer", "Droid Sentinel"]
-    },
-    {
-        name: "Reflex Actuators",
-        type: "legs",
-        stats: { speed: 12 },
-        dropRate: 15,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Phase Shift Legs",
-        type: "legs",
-        stats: { speed: 16 },
-        dropRate: 8,
-        droppedBy: ["Droid Destroyer"]
-    },
-    {
-        name: "Quantum Thrusters",
-        type: "legs",
-        stats: { speed: 20 },
-        dropRate: 4,
-        droppedBy: ["Droid Destroyer"]
-    },
-
-    // ==================== ARMS (Attack or Defence) ====================
-    {
-        name: "Standard Manipulators",
-        type: "arms",
-        stats: { attack: 2 },
-        dropRate: 50,
-        droppedBy: []
-    },
-    {
-        name: "Shield Bracers",
-        type: "arms",
-        stats: { defence: 2 },
-        dropRate: 45,
-        droppedBy: []
-    },
-    {
-        name: "Power Gauntlets",
-        type: "arms",
-        stats: { attack: 4 },
-        dropRate: 30,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"]
-    },
-    {
-        name: "Barrier Arms",
-        type: "arms",
-        stats: { defence: 4 },
-        dropRate: 28,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"]
-    },
-    {
-        name: "Crusher Claws",
-        type: "arms",
-        stats: { attack: 7 },
-        dropRate: 12,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Fortress Gauntlets",
-        type: "arms",
-        stats: { defence: 6 },
-        dropRate: 10,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Decimator Arms",
-        type: "arms",
-        stats: { attack: 10 },
-        dropRate: 5,
-        droppedBy: ["Droid Destroyer"]
-    },
-
-    // ==================== WEAPON (Attack, Combo, or Defence) ====================
-    {
-        name: "Pulse Pistol",
-        type: "weapon",
-        stats: { attack: 2 },
-        dropRate: 50,
-        droppedBy: []
-    },
-    {
-        name: "Energy Shield",
-        type: "weapon",
-        stats: { defence: 2 },
-        dropRate: 45,
-        droppedBy: []
-    },
-    {
-        name: "Chain Blade",
-        type: "weapon",
-        stats: { attack: 3, combo: 3 },
-        dropRate: 30,
-        droppedBy: []
-    },
-    {
-        name: "Plasma Rifle",
-        type: "weapon",
-        stats: { attack: 5 },
-        dropRate: 25,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"]
-    },
-    {
-        name: "Combo Striker",
-        type: "weapon",
-        stats: { combo: 8 },
-        dropRate: 20,
-        droppedBy: ["Droid Scout", "Droid Enforcer"]
-    },
-    {
-        name: "Fortress Module",
-        type: "weapon",
-        stats: { defence: 5 },
-        dropRate: 18,
-        droppedBy: ["Droid Sentinel"]
-    },
-    {
-        name: "Railgun",
-        type: "weapon",
-        stats: { attack: 8 },
-        dropRate: 12,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Breaker Blade",
-        type: "weapon",
-        stats: { attack: 5, combo: 10 },
-        dropRate: 8,
-        droppedBy: ["Droid Destroyer"]
-    },
-    {
-        name: "Annihilator Cannon",
-        type: "weapon",
-        stats: { attack: 12 },
-        dropRate: 4,
-        droppedBy: ["Droid Destroyer"]
-    },
-
-    // ==================== SYSTEMS CHIP (Any stat) ====================
-    {
-        name: "Health Booster Chip",
-        type: "chip",
-        stats: { hp: 15 },
+        stats: { speed: 6 },
         dropRate: 40,
         droppedBy: []
     },
     {
-        name: "Speed Processor",
+        name: "Hydraulic Boosters [+8 SPD]",
+        type: "legs",
+        stats: { speed: 8 },
+        dropRate: 30,
+        droppedBy: []
+    },
+    {
+        name: "Reflex Actuators [+10 SPD]",
+        type: "legs",
+        stats: { speed: 10 },
+        dropRate: 22,
+        droppedBy: []
+    },
+    {
+        name: "Kinetic Stabilizers [+12 SPD]",
+        type: "legs",
+        stats: { speed: 12 },
+        dropRate: 16,
+        droppedBy: []
+    },
+    {
+        name: "Phase Shift Legs [+14 SPD]",
+        type: "legs",
+        stats: { speed: 14 },
+        dropRate: 12,
+        droppedBy: []
+    },
+    {
+        name: "Quantum Thrusters [+16 SPD]",
+        type: "legs",
+        stats: { speed: 16 },
+        dropRate: 8,
+        droppedBy: []
+    },
+    {
+        name: "Temporal Drives [+18 SPD]",
+        type: "legs",
+        stats: { speed: 18 },
+        dropRate: 5,
+        droppedBy: []
+    },
+    {
+        name: "Singularity Runners [+20 SPD]",
+        type: "legs",
+        stats: { speed: 20 },
+        dropRate: 3,
+        droppedBy: []
+    },
+
+    // ==================== ARMS (Attack or Defence) ====================
+    {
+        name: "Standard Manipulators [+2 ATK]",
+        type: "arms",
+        stats: { attack: 2 },
+        dropRate: 55,
+        droppedBy: []
+    },
+    {
+        name: "Shield Bracers [+2 DEF]",
+        type: "arms",
+        stats: { defence: 2 },
+        dropRate: 55,
+        droppedBy: []
+    },
+    {
+        name: "Power Gauntlets [+4 ATK]",
+        type: "arms",
+        stats: { attack: 4 },
+        dropRate: 40,
+        droppedBy: []
+    },
+    {
+        name: "Barrier Arms [+4 DEF]",
+        type: "arms",
+        stats: { defence: 4 },
+        dropRate: 40,
+        droppedBy: []
+    },
+    {
+        name: "Crusher Claws [+6 ATK]",
+        type: "arms",
+        stats: { attack: 6 },
+        dropRate: 26,
+        droppedBy: []
+    },
+    {
+        name: "Fortress Gauntlets [+6 DEF]",
+        type: "arms",
+        stats: { defence: 6 },
+        dropRate: 26,
+        droppedBy: []
+    },
+    {
+        name: "Ravager Arms [+8 ATK]",
+        type: "arms",
+        stats: { attack: 8 },
+        dropRate: 14,
+        droppedBy: []
+    },
+    {
+        name: "Aegis Bracers [+8 DEF]",
+        type: "arms",
+        stats: { defence: 8 },
+        dropRate: 14,
+        droppedBy: []
+    },
+    {
+        name: "Decimator Arms [+10 ATK]",
+        type: "arms",
+        stats: { attack: 10 },
+        dropRate: 6,
+        droppedBy: []
+    },
+    {
+        name: "Citadel Arms [+10 DEF]",
+        type: "arms",
+        stats: { defence: 10 },
+        dropRate: 6,
+        droppedBy: []
+    },
+
+    // ==================== WEAPON (Attack, Combo, or Defence) ====================
+    {
+        name: "Pulse Pistol [+2 ATK]",
+        type: "weapon",
+        stats: { attack: 2 },
+        dropRate: 55,
+        droppedBy: []
+    },
+    {
+        name: "Energy Shield [+2 DEF]",
+        type: "weapon",
+        stats: { defence: 2 },
+        dropRate: 55,
+        droppedBy: []
+    },
+    {
+        name: "Chain Blade [+3 ATK][+2 COMBO]",
+        type: "weapon",
+        stats: { attack: 3, combo: 2 },
+        dropRate: 40,
+        droppedBy: []
+    },
+    {
+        name: "Plasma Rifle [+5 ATK]",
+        type: "weapon",
+        stats: { attack: 5 },
+        dropRate: 30,
+        droppedBy: []
+    },
+    {
+        name: "Combo Striker [+4 COMBO]",
+        type: "weapon",
+        stats: { combo: 4 },
+        dropRate: 26,
+        droppedBy: []
+    },
+    {
+        name: "Fortress Module [+5 DEF]",
+        type: "weapon",
+        stats: { defence: 5 },
+        dropRate: 22,
+        droppedBy: []
+    },
+    {
+        name: "Railgun [+8 ATK]",
+        type: "weapon",
+        stats: { attack: 8 },
+        dropRate: 14,
+        droppedBy: []
+    },
+    {
+        name: "Breaker Blade [+10 ATK][+6 COMBO]",
+        type: "weapon",
+        stats: { attack: 10, combo: 6 },
+        dropRate: 10,
+        droppedBy: []
+    },
+    {
+        name: "Annihilator Cannon [+12 ATK]",
+        type: "weapon",
+        stats: { attack: 12 },
+        dropRate: 6,
+        droppedBy: []
+    },
+    {
+        name: "Omega Rupture Cannon [+14 ATK][+8 COMBO]",
+        type: "weapon",
+        stats: { attack: 14, combo: 8 },
+        dropRate: 3,
+        droppedBy: []
+    },
+
+    // ==================== SYSTEMS CHIP (Any stat) ====================
+    {
+        name: "Health Booster Chip I [+10 HP]",
+        type: "chip",
+        stats: { hp: 10 },
+        dropRate: 45,
+        droppedBy: []
+    },
+    {
+        name: "Health Booster Chip II [+20 HP]",
+        type: "chip",
+        stats: { hp: 20 },
+        dropRate: 18,
+        droppedBy: []
+    },
+    {
+        name: "Speed Processor I [+2 SPD]",
+        type: "chip",
+        stats: { speed: 2 },
+        dropRate: 44,
+        droppedBy: []
+    },
+    {
+        name: "Speed Processor II [+4 SPD]",
         type: "chip",
         stats: { speed: 4 },
-        dropRate: 38,
+        dropRate: 17,
         droppedBy: []
     },
     {
-        name: "Attack Subroutine",
+        name: "Attack Subroutine I [+2 ATK]",
         type: "chip",
         stats: { attack: 2 },
-        dropRate: 36,
+        dropRate: 43,
         droppedBy: []
     },
     {
-        name: "Combo Algorithm",
+        name: "Attack Subroutine II [+4 ATK]",
         type: "chip",
-        stats: { combo: 5 },
-        dropRate: 34,
+        stats: { attack: 4 },
+        dropRate: 16,
         droppedBy: []
     },
     {
-        name: "Defence Matrix",
+        name: "Combo Algorithm I [+4 COMBO]",
+        type: "chip",
+        stats: { combo: 4 },
+        dropRate: 42,
+        droppedBy: []
+    },
+    {
+        name: "Combo Algorithm II [+8 COMBO]",
+        type: "chip",
+        stats: { combo: 8 },
+        dropRate: 15,
+        droppedBy: []
+    },
+    {
+        name: "Defence Matrix I [+2 DEF]",
         type: "chip",
         stats: { defence: 2 },
-        dropRate: 32,
+        dropRate: 41,
         droppedBy: []
     },
     {
-        name: "Balanced Core",
+        name: "Defence Matrix II [+4 DEF]",
         type: "chip",
-        stats: { hp: 10, attack: 2, defence: 1 },
-        dropRate: 20,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"]
-    },
-    {
-        name: "Assault Protocol",
-        type: "chip",
-        stats: { attack: 4, combo: 6 },
-        dropRate: 15,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Survival Module",
-        type: "chip",
-        stats: { hp: 30, defence: 3 },
-        dropRate: 12,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"]
-    },
-    {
-        name: "Overclock Chip",
-        type: "chip",
-        stats: { speed: 8, combo: 8 },
-        dropRate: 8,
-        droppedBy: ["Droid Destroyer"]
-    },
-    {
-        name: "Omega Core",
-        type: "chip",
-        stats: { hp: 20, speed: 5, attack: 3, combo: 5, defence: 2 },
-        dropRate: 3,
-        droppedBy: ["Droid Destroyer"]
+        stats: { defence: 4 },
+        dropRate: 14,
+        droppedBy: []
     }
-];
+
 
 // Item type labels for UI
 const ITEM_TYPES = {
