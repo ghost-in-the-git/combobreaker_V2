@@ -14,7 +14,7 @@
 const ITEMS = [
     // ==================== BODY (HP & Defence) ====================
     {
-        name: "Basic Plating",
+        name: "Steel Plate [+10 HP]",
         type: "body",
         stats: { hp: 10, defence: 1 },
         dropRate: 50,
@@ -291,9 +291,9 @@ const ITEMS = [
 
 // Item type labels for UI
 const ITEM_TYPES = {
-    body: "Body",
-    legs: "Legs",
-    arms: "Arms",
-    weapon: "Weapon",
-    chip: "Systems Chip"
+    body: "B O D Y",
+    legs: "L E G S",
+    arms: "A R M S",
+    weapon: "W E A P O N",
+    chip: "C O R E"
 };
